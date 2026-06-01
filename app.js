@@ -44,30 +44,15 @@ function handleFormSubmit(formId, subject) {
     const errorEl = form.querySelector('.form-error');
     if (errorEl) errorEl.textContent = '';
 
-    const hasFile = Array.from(form.elements).some(
-      (el) => el.type === 'file' && el.files && el.files.length > 0
-    );
-
-    let body, headers;
-    if (hasFile) {
-      const fd = new FormData(form);
-      fd.append('access_key', WEB3FORMS_ACCESS_KEY);
-      fd.append('subject', subject);
-      body = fd;
-      headers = {};
-    } else {
-      const data = Object.fromEntries(new FormData(form));
-      data.access_key = WEB3FORMS_ACCESS_KEY;
-      data.subject = subject;
-      body = JSON.stringify(data);
-      headers = { 'Content-Type': 'application/json' };
-    }
+    const data = Object.fromEntries(new FormData(form));
+    data.access_key = WEB3FORMS_ACCESS_KEY;
+    data.subject = subject;
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers,
-        body,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
       });
       const json = await res.json();
       if (json.success) {
@@ -96,6 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const osSelect = document.getElementById('issue-os');
   if (osSelect) osSelect.value = platform === 'macos' ? 'macOS' : 'Windows';
 
-  handleFormSubmit('issue-form', 'LoopScore Bug Report');
+  handleFormSubmit('issue-form', 'LoopScore Issue Report');
   handleFormSubmit('feature-form', 'LoopScore Feature Request');
 });
