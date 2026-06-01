@@ -1,0 +1,101 @@
+const WEB3FORMS_ACCESS_KEY = '8bc11913-89ec-4f96-9017-37a8ac4ad539';
+const DOWNLOAD_URL_WINDOWS = '#'; // TODO: replace with Windows installer URL
+const DOWNLOAD_URL_MACOS = '#';   // TODO: replace with macOS installer URL
+
+function detectPlatform() {
+  const ua = navigator.userAgent;
+  if (/Mac/.test(ua) && !/iPhone|iPad/.test(ua)) return 'macos';
+  return 'windows';
+}
+
+function activateTab(container, tabName) {
+  const btn = container.querySelector(`.tab-btn[data-tab="${tabName}"]`);
+  const panel = container.querySelector(`.tab-panel[data-tab="${tabName}"]`);
+  if (!btn || !panel) return;
+  container.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+  container.querySelectorAll('.tab-panel').forEach((p) => p.classList.remove('active'));
+  btn.classList.add('active');
+  panel.classList.add('active');
+}
+
+function initTabs(container, defaultTab) {
+  const buttons = container.querySelectorAll('.tab-btn');
+  const panels = container.querySelectorAll('.tab-panel');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      buttons.forEach((b) => b.classList.remove('active'));
+      panels.forEach((p) => p.classList.remove('active'));
+      btn.classList.add('active');
+      container.querySelector(`.tab-panel[data-tab="${target}"]`).classList.add('active');
+    });
+  });
+
+  if (defaultTab) activateTab(container, defaultTab);
+}
+
+function handleFormSubmit(formId, subject) {
+  const form = document.getElementById(formId);
+  if (!form) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errorEl = form.querySelector('.form-error');
+    if (errorEl) errorEl.textContent = '';
+
+    const hasFile = Array.from(form.elements).some(
+      (el) => el.type === 'file' && el.files && el.files.length > 0
+    );
+
+    let body, headers;
+    if (hasFile) {
+      const fd = new FormData(form);
+      fd.append('access_key', WEB3FORMS_ACCESS_KEY);
+      fd.append('subject', subject);
+      body = fd;
+      headers = {};
+    } else {
+      const data = Object.fromEntries(new FormData(form));
+      data.access_key = WEB3FORMS_ACCESS_KEY;
+      data.subject = subject;
+      body = JSON.stringify(data);
+      headers = { 'Content-Type': 'application/json' };
+    }
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers,
+        body,
+      });
+      const json = await res.json();
+      if (json.success) {
+        const msg = document.createElement('p');
+        msg.className = 'form-success';
+        msg.textContent = 'Thank you — your submission has been received.';
+        form.replaceWith(msg);
+      } else {
+        throw new Error(json.message || 'Submission failed.');
+      }
+    } catch (err) {
+      const el = form.querySelector('.form-error');
+      if (el) el.textContent = err.message || 'Something went wrong. Please try again.';
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('#install-tabs .tab-panel[data-tab="windows"] .download-btn').href = DOWNLOAD_URL_WINDOWS;
+  document.querySelector('#install-tabs .tab-panel[data-tab="macos"] .download-btn').href = DOWNLOAD_URL_MACOS;
+
+  const platform = detectPlatform();
+  initTabs(document.getElementById('install-tabs'), platform);
+  initTabs(document.getElementById('feedback-tabs'));
+
+  const osSelect = document.getElementById('issue-os');
+  if (osSelect) osSelect.value = platform === 'macos' ? 'macOS' : 'Windows';
+
+  handleFormSubmit('issue-form', 'LoopScore Bug Report');
+  handleFormSubmit('feature-form', 'LoopScore Feature Request');
+});

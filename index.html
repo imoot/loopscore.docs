@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LoopScore</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>LoopScore</h1>
+      <p class="tagline">Music notation for modern musics.</p>
+      <p class="description">
+        LoopScore is an application for notating and analyzing loop-based music.
+        It introduces <strong>Loop Notation</strong> — a new system for representing musical structure,
+        heavily inspired by the visual language of EDM production in DAWs and touch pads.
+        Developed for composers and producers working in loop-based forms.
+      </p>
+    </div>
+  </header>
+
+  <section id="install">
+    <div class="container">
+      <h2>Download &amp; Install</h2>
+      <div class="tab-group" id="install-tabs">
+        <div class="tab-nav">
+          <button class="tab-btn active" data-tab="windows">Windows</button>
+          <button class="tab-btn" data-tab="macos">macOS</button>
+        </div>
+
+        <!-- Windows -->
+        <div class="tab-panel active" data-tab="windows">
+          <a href="#" class="download-btn">Download for Windows</a>
+          <div class="install-content">
+            <h3>Requirements</h3>
+            <ul>
+              <li>Windows 10 or Windows 11 (64-bit)</li>
+              <li>No additional software required — the installer is self-contained</li>
+            </ul>
+
+            <h3>Installation Steps</h3>
+            <ol>
+              <li>Download the installer from the link above.</li>
+              <li>Double-click <code>loopscore-1.0.0 Setup</code> to run the installer.</li>
+              <li>
+                Windows may show a SmartScreen prompt (<em>"Windows protected your PC"</em>) because the app is unsigned.
+                Click <strong>More info</strong>, then <strong>Run anyway</strong>.
+              </li>
+              <li>
+                The installer runs silently and finishes in a few seconds.
+                LoopScore will launch automatically and a shortcut will be added to your Start Menu.
+              </li>
+            </ol>
+
+            <h3>First Launch</h3>
+            <p>
+              LoopScore will ask you to choose a <strong>base folder</strong> for your
+              <code>.lscz</code> composition files. This can be changed later in Settings.
+            </p>
+
+            <h3>Uninstalling</h3>
+            <ul>
+              <li>
+                Open <strong>Settings → Apps</strong> (Windows 11) or
+                <strong>Control Panel → Programs and Features</strong> (Windows 10),
+                find <strong>loopscore</strong>, and click Uninstall.
+              </li>
+              <li>
+                Or run: <code>%LocalAppData%\loopscore\Update.exe --uninstall</code>
+              </li>
+              <li>Your <code>.lscz</code> files are not deleted.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- macOS -->
+        <div class="tab-panel" data-tab="macos">
+          <a href="#" class="download-btn">Download for macOS</a>
+          <div class="install-content">
+            <h3>Requirements</h3>
+            <ul>
+              <li>macOS 11 (Big Sur) or later</li>
+              <li>No additional software required</li>
+            </ul>
+
+            <h3>Installation Steps</h3>
+            <ol>
+              <li>Download the <code>.dmg</code> installer from the link above.</li>
+              <li>Open the <code>.dmg</code> file and drag <strong>LoopScore</strong> into your <strong>Applications</strong> folder.</li>
+              <li>
+                <strong>Bypassing Gatekeeper:</strong> Because LoopScore is not yet notarized, macOS will block it on first launch. To open it:
+                <ul>
+                  <li>Right-click (or Control-click) the LoopScore icon in Applications.</li>
+                  <li>Select <strong>Open</strong> from the context menu.</li>
+                  <li>Click <strong>Open</strong> in the dialog that appears.</li>
+                  <li>You only need to do this once. Future launches work normally.</li>
+                </ul>
+              </li>
+              <li>
+                On first launch, LoopScore will ask you to choose a <strong>base folder</strong> for your
+                <code>.lscz</code> composition files.
+              </li>
+            </ol>
+
+            <h3>Uninstalling</h3>
+            <ul>
+              <li>Drag LoopScore from Applications to the Trash.</li>
+              <li>Your <code>.lscz</code> files are not deleted.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="feedback">
+    <div class="container">
+      <h2>Feedback</h2>
+      <div class="tab-group" id="feedback-tabs">
+        <div class="tab-nav">
+          <button class="tab-btn active" data-tab="feature">Request a Feature</button>
+          <button class="tab-btn" data-tab="issue">Report an Issue</button>
+        </div>
+
+        <!-- Report an Issue -->
+        <div class="tab-panel" data-tab="issue">
+          <form id="issue-form" novalidate>
+            <div class="form-group">
+              <label for="issue-name">Name <span class="optional">(optional)</span></label>
+              <input type="text" id="issue-name" name="name" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="issue-email">Email <span class="optional">(optional)</span></label>
+              <input type="email" id="issue-email" name="email" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="issue-os">Operating System</label>
+              <select id="issue-os" name="operating_system">
+                <option value="Windows">Windows</option>
+                <option value="macOS">macOS</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="issue-version">App Version <span class="optional">(e.g. 1.0.0)</span></label>
+              <input type="text" id="issue-version" name="app_version" placeholder="1.0.0" required />
+            </div>
+            <div class="form-group">
+              <label for="issue-desc">Description</label>
+              <textarea id="issue-desc" name="description" placeholder="Describe the issue and steps to reproduce it" required></textarea>
+            </div>
+            <div class="form-group">
+              <label for="issue-screenshots">Screenshots <span class="optional">(optional)</span></label>
+              <input type="file" id="issue-screenshots" name="attachment" accept="image/*" multiple />
+              <p class="field-hint">PNG, JPG, GIF — up to a few MB each</p>
+            </div>
+            <button type="submit" class="submit-btn">Submit Report</button>
+            <p class="form-error"></p>
+          </form>
+        </div>
+
+        <!-- Request a Feature -->
+        <div class="tab-panel active" data-tab="feature">
+          <form id="feature-form" novalidate>
+            <div class="form-group">
+              <label for="feature-name">Name <span class="optional">(optional)</span></label>
+              <input type="text" id="feature-name" name="name" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label for="feature-email">Email <span class="optional">(optional)</span></label>
+              <input type="email" id="feature-email" name="email" placeholder="you@example.com" />
+            </div>
+            <div class="form-group">
+              <label for="feature-desc">Feature Request</label>
+              <textarea id="feature-desc" name="feature_request" placeholder="Describe the feature you'd like to see" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Submit Request</button>
+            <p class="form-error"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>All rights reserved. Supported in part through the EXCEL Enterprise Fund.</p>
+      <img src="excel-logo.png" alt="EXCEL Enterprise Fund" />
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
