@@ -1,6 +1,4 @@
 const WEB3FORMS_ACCESS_KEY = '8bc11913-89ec-4f96-9017-37a8ac4ad539';
-const DOWNLOAD_URL_WINDOWS = '#'; // TODO: replace with Windows installer URL
-const DOWNLOAD_URL_MACOS = '#';   // TODO: replace with macOS installer URL
 
 function detectPlatform() {
   const ua = navigator.userAgent;
@@ -71,9 +69,6 @@ function handleFormSubmit(formId, subject) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('#install-tabs .tab-panel[data-tab="windows"] .download-btn').href = DOWNLOAD_URL_WINDOWS;
-  document.querySelector('#install-tabs .tab-panel[data-tab="macos"] .download-btn').href = DOWNLOAD_URL_MACOS;
-
   const platform = detectPlatform();
   initTabs(document.getElementById('install-tabs'), platform);
   initTabs(document.getElementById('feedback-tabs'));
