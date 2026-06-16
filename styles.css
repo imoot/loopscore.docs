@@ -58,7 +58,8 @@ header h1 {
 
 .header-image {
   display: block;
-  width: 100%;
+  max-width: 100%;
+  height: auto;
   margin-top: 40px;
   border-radius: 8px;
 }
@@ -107,6 +108,7 @@ section h2 {
 }
 
 .example-card .download-btn {
+  display: block;
   margin-bottom: 0;
   text-align: center;
 }
