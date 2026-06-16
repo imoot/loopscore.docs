@@ -58,10 +58,11 @@ header h1 {
 
 .header-image {
   display: block;
-  max-width: 100%;
+  width: 100%;
   height: auto;
   margin-top: 40px;
   border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
 /* Sections */
@@ -82,18 +83,25 @@ section h2 {
 
 .examples-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
+}
+
+@media (max-width: 500px) {
+  .examples-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .example-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid #3a3a3a;
   border-radius: 8px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .example-card h3 {
