@@ -89,14 +89,15 @@
 
             <h3>Installation Steps</h3>
             <ol>
-              <li>Download the <code>.dmg</code> installer from the link above.</li>
-              <li>Open the <code>.dmg</code> file and drag <strong>LoopScore</strong> into your <strong>Applications</strong> folder.</li>
+              <li>Download the application from the link above.</li>
+              <li>Unzip the file and drag <strong>LoopScore</strong> into your <strong>Applications</strong> folder.</li>
               <li>
-                <strong>Bypassing Gatekeeper:</strong> Because LoopScore is not yet notarized, macOS will block it on first launch. To open it:
+                <strong>Bypassing Gatekeeper:</strong> Because LoopScore is not yet signed, macOS will block it on first launch. To open it:
                 <ul>
                   <li>Right-click (or Control-click) the LoopScore icon in Applications.</li>
-                  <li>Select <strong>Open</strong> from the context menu.</li>
-                  <li>Click <strong>Open</strong> in the dialog that appears.</li>
+                  <li>Select <strong>New Terminal at Folder</strong> from the context menu.</li>
+                  <li>Type <code>xattr -rd com.apple.quarantine .</code> in the Terminal window and press Enter to run.</li>
+                  <li>Return to the Applications folder and click the LoopScore icon to open.</li>
                   <li>You only need to do this once. Future launches work normally.</li>
                 </ul>
               </li>
